@@ -1,12 +1,12 @@
 
 
-### 声明
+## 声明
 
 ​		由于传播、利用此文所提供的信息而造成的任何直接或者间接的后果及损失，均由使用者本人负责，文章作者不为此承担任何责任。如欲转载或传播此文章，必须保证此文章的完整性，未经众测允许，不得任意修改或者增减此文章内容，不得以任何方式将其用于商业目的。
 
-### 靶场配置
+## 靶场配置
 
-​		靶场地址：https://github.com/zhuifengshaonianhanlu/pikachu；
+​		靶场地址：https://github.com/zhuifengshaonianhanlu/pikachu
 
 ​		本文章靶场环境 `Ubuntu 22.04 LTS` + `Apache 2.4.39` + `MySQL 5.7.27` + `PHP 5.5.38`；
 
@@ -14,13 +14,13 @@
 
 ​		PHP推荐使用`PHP 5.X`版本，高版本PHP会出现错误。
 
-### 一.暴力破解
+## 一.暴力破解
 
 ​		事先准备好字典文件，字典文件不用太过复杂
 
 ![image-20220515225333350](https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220515225333350.png)
 
-#### 1.1 基于表单的暴力破解
+### 1.1 基于表单的暴力破解
 
 随便输入`username`和`password`进行尝试，使用burp抓包发现是POST方式提交数据，并且没有验证码等防御措施
 
@@ -44,7 +44,7 @@
 
 ![image-20220515231144729](https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220515231144729.png)
 
-#### 1.2 验证码绕过（on server）
+### 1.2 验证码绕过（on server）
 
 服务器端验证码常见问题：
 
@@ -71,7 +71,7 @@
 
 ![image-20220515232938456](https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220515232938456.png)
 
-#### 1.3 验证码绕过（on client）
+### 1.3 验证码绕过（on client）
 
 验证码使用前端js验证，可以通过剔除js代码来进行爆破
 
@@ -85,7 +85,7 @@
 
 ![image-20220515233403618](https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220515233403618.png)
 
-#### 1.4 token防爆破？
+### 1.4 token防爆破？
 
 输入用户名和密码抓包分析，发现表单中带有token参数，在暴力破解过程中自动抓取token填入表单即可。
 
@@ -107,9 +107,9 @@
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220516001514926.png" alt="image-20220516001514926" style="zoom:67%;" />
 
-### 二. Cross-Site Scripting
+## 二. Cross-Site Scripting
 
-#### 2.1 反射型xss（get）
+### 2.1 反射型xss（get）
 
 输入<>等符号发现原样输出，直接注入，发现输入长度受限，审查元素修改长度后再次注入
 
@@ -117,31 +117,31 @@
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220613215718636.png" alt="image-20220613215718636"  />
 
-#### 2.2 反射型xss（post）
+### 2.2 反射型xss（post）
 
 输入<>等符号发现原样输出，直接注入
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220613231637400.png"  />
 
-#### 2.3 存储型xss
+### 2.3 存储型xss
 
 存储型xss插入后，刷新页面仍出现xss弹窗。
 
 ![image-20220613232406761](https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220613232406761.png)
 
-#### 2.4 DOM型xss
+### 2.4 DOM型xss
 
 闭合`<a>`标签，payload： `'><img src="#" onmouseover="alert('xss')">`，鼠标移到图片位置便会出发弹窗。
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220622143756237.png"  />
 
-#### 2.5 DOM型xss-x
+### 2.5 DOM型xss-x
 
 闭合`<a>`标签，payload：`'><img src="#" onmouseover="alert('xss')">`
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220622144802078.png" alt="image-20220622144802078"  />
 
-#### 2.6 xss之盲打
+### 2.6 xss之盲打
 
 XSS盲打是一种攻击场景，我们输出的payload不会在前端进行输出，当管理员查看时就会遭到xss攻击，登录后台查看盲打，后台地址`/xssblind/admin_login.php`
 
@@ -149,7 +149,7 @@ XSS盲打是一种攻击场景，我们输出的payload不会在前端进行输�
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220622145145533.png" alt="image-20220622145145533"  />
 
-#### 2.7 xss之过滤
+### 2.7 xss之过滤
 
 输入`'"<script>`发现被过滤，尝试大小写绕过过滤，payload：`<SCRIPT>alert(/xss/)</sCRIpt>`
 
@@ -157,13 +157,13 @@ XSS盲打是一种攻击场景，我们输出的payload不会在前端进行输�
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220623093917532.png" alt="image-20220623093917532"  />
 
-#### 2.8 xss之htmlspecialchars
+### 2.8 xss之htmlspecialchars
 
 可以使用单引号构造payload：`\#' onclick='alert(/xss/)`
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220623095554844.png" alt="image-20220623095554844"  />
 
-#### 2.9 xss之href输出
+### 2.9 xss之href输出
 
 在a标签的href属性里面,可以使用javascript协议来执行js，可以尝试使用伪协议绕过。
 
@@ -171,15 +171,15 @@ payload:`javascript:alert(/xss/)`
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220623100806007.png" alt="image-20220623100806007"  />
 
-#### 2.10 xss之js输出
+### 2.10 xss之js输出
 
 payload:`</script><script>alert(/xss/)</script>`
 
 <img src="https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220623105335832.png" alt="image-20220623105335832"  />
 
-### 三. CSRF
+## 三. CSRF
 
-#### 3.1 CSRF(get)
+### 3.1 CSRF(get)
 
 get 型 csrf，构造虚假get请求诱导受害者点击即可，先登录vince账户，构造get请求，随后诱导受害者在登录账户的情况下点击链接。
 
@@ -195,7 +195,7 @@ http://127.0.0.1/pikachu-master/vul/csrf/csrfget/csrf_get_edit.phpsex=boy&phonen
 
 allen个人信息已被更改
 
-#### 3.2 CSRF(post)
+### 3.2 CSRF(post)
 
 post'型csrf需要构造表单诱导用户提交，使用burp构造站点诱导用户提交表单
 
@@ -209,15 +209,15 @@ post'型csrf需要构造表单诱导用户提交，使用burp构造站点诱导�
 
 ![image-20220516162527456](https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220516162527456.png)
 
-#### 3.3 CSRF Token
+### 3.3 CSRF Token
 
 抓包分析，url中带有token，无法伪造，token可以防范csrf
 
 ![image-20220516162738072](https://blog-1304194110.cos.ap-nanjing.myqcloud.com/image-20220516162738072.png)
 
-### 四. SQL-Inject
+## 四. SQL-Inject
 
-### 五. RCE
+## 五. RCE
 
 如果靶场搭建在Windows平台会出现中文乱码，解决方法如下
 
