@@ -227,59 +227,59 @@ post'型csrf需要构造表单诱导用户提交，使用burp构造站点诱导�
 
 方法三：将rce_ping.php文件中的`//header("Content-type:text/html; charset=gbk");`改为`header("Content-type:text/html; charset=gbk");`，rce中文乱码问题解决，但别的部分出现乱码。
 
-#### 5.1 exec(ping)
+### 5.1 exec(ping)
 
-#### 5.2 exec(evel)
+### 5.2 exec(evel)
 
-### 六. File Inclusion
+## 六. File Inclusion
 
-#### 6.1 File Inclusion(local)
+### 6.1 File Inclusion(local)
 
-#### 6.2 File Inclusion(remote)
+### 6.2 File Inclusion(remote)
 
-### 七. Unsafe Filedownload
+## 七. Unsafe Filedownload
 
-#### 7.1 Unsafe Filedownload
+### 7.1 Unsafe Filedownload
 
-### 八. Unsafe Fileupload
+## 八. Unsafe Fileupload
 
-#### 8.1 client check
+### 8.1 client check
 
-#### 8.2 MIME type
+### 8.2 MIME type
 
-#### 8.3 getimagesize
+### 8.3 getimagesize
 
-### 九. Over Permission
+## 九. Over Permission
 
-#### 9.1 水平越权
+### 9.1 水平越权
 
-#### 9.2 垂直越权
+### 9.2 垂直越权
 
-### 十. .../.../
+## 十. .../.../
 
-#### 10.1目录遍历
+### 10.1目录遍历
 
-### 十一. 敏感信息泄露
+## 十一. 敏感信息泄露
 
-#### 11.1 IcanseeyourABC
+### 11.1 IcanseeyourABC
 
-### 十二. PHP反序列化
+## 十二. PHP反序列化
 
-#### 12.1 PHP反序列化漏洞
+### 12.1 PHP反序列化漏洞
 
-### 十三. XXE
+## 十三. XXE
 
-#### 13.1 XXE漏洞
+### 13.1 XXE漏洞
 
 ### 十四. URL重定向
 
-#### 14.1 不安全的URL跳转
+### 14.1 不安全的URL跳转
 
 ### 十五. SSRF
 
-#### 15.1 SSRF(curl)
+### 15.1 SSRF(curl)
 
-#### 15.2 SSRF(file_get_vontent)
+### 15.2 SSRF(file_get_vontent)
 
 
 
